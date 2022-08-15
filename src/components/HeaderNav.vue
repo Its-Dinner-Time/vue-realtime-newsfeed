@@ -7,18 +7,17 @@ const ToggleMenu = () => store.dispatch('ToggleMenu');
 </script>
 
 <template>
-  <header class="flex w-full items-center justify-center p-4">
-    <div class="menu-toggle" :class="{ 'is-active': isMenuActive() }" @click="ToggleMenu">
-      <div class="hamburger"><span></span></div>
-    </div>
-
-    <h1 class="text-center text-3xl uppercase font-light">Sanity News</h1>
+  <header class="flex w-full items-center justify-center sticky top-0 left-0 p-4 bg-gray-600">
+    <h1 class="text-center text-3xl uppercase font-light">dinner times</h1>
   </header>
+  <div class="menu-toggle" :class="{ 'is-active': isMenuActive() }" @click="ToggleMenu">
+    <div class="hamburger"><span></span></div>
+  </div>
 </template>
 
 <style scoped>
 .menu-toggle {
-  @apply absolute top-4 left-4 cursor-pointer z-50;
+  @apply fixed top-4 left-4 cursor-pointer z-50;
   @apply w-[32px] h-[32px];
 }
 

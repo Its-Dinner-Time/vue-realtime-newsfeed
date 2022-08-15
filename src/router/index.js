@@ -14,6 +14,11 @@ const routes = [
     component: () => import('../views/author/Author.vue'),
   },
   {
+    path: `${pages.authorPage()}/:id`,
+    name: 'Profile',
+    component: () => import('../views/author/_id.vue'),
+  },
+  {
     path: `${pages.postPage()}/:id`,
     name: 'Post',
     component: () => import('../views/post/_id.vue'),

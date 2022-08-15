@@ -24,7 +24,6 @@ export default createStore({
       state.posts = posts;
     },
     SET_AUTHORS: (state, authors) => {
-      console.log(authors);
       state.authors = authors;
     },
     SET_TOTAL_POSTS: (state, count) => {
@@ -39,8 +38,8 @@ export default createStore({
     CloseMenu({ commit }) {
       commit('TOGGLE_MENU', false);
     },
-    FetchPosts({ commit }, limit = null) {
-      const query = `${queries.getPost()} ${queries.with('author')} | ${queries.order('_createdAt', 'desc')} ${limit && `[0... ${limit}]`}`;
+    FetchPosts({ commit, state }) {
+      const query = `${queries.getPost()} ${queries.with('author')} | ${queries.order('_createdAt', 'desc')} [0...${state.max_posts}]`;
       sanity.fetch(query).then((posts) => commit('SET_POSTS', posts));
 
       const countQuery = `count(${queries.getPost()})`;
@@ -56,10 +55,14 @@ export default createStore({
       commit('SET_POSTS', posts);
       commit('SET_TOTAL_POSTS', state.total_posts + 1);
     },
-    RemovePost({ commit, state }, postId) {
-      commit('SET_TOTAL_POSTS', state.total_posts - 1);
+    RemovePost({ dispatch, commit, state }, postId) {
       const posts = state.posts.filter((p) => p._id !== postId); // 글 삭제
+      if (posts.length < state.posts.length) {
+        dispatch('FetchPosts');
+        return;
+      }
 
+      commit('SET_TOTAL_POSTS', state.total_posts - 1);
       commit('SET_POSTS', posts);
     },
     LoadMorePosts({ commit, state }, num) {
@@ -70,7 +73,6 @@ export default createStore({
 
     GetAuthors({ commit }) {
       const query = `${queries.getAuthor()} | ${queries.order('_createdAt', 'desc')}`;
-      console.log(query);
       sanity.fetch(query).then((authors) => commit('SET_AUTHORS', authors));
     },
   },

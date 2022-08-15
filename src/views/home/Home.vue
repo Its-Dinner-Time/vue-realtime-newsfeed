@@ -10,7 +10,9 @@ const subscription = ref(null);
 const store = useStore();
 
 const posts = computed(() => store.getters.posts);
-const buttonClickHandler = () => store.dispatch('LoadMorePosts', 1);
+const buttonClickHandler = () => {
+  store.dispatch('LoadMorePosts', 1);
+};
 
 onMounted(() => {
   store.dispatch('FetchPosts', store.state.max_posts);

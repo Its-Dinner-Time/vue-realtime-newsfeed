@@ -6,6 +6,7 @@ import { queries } from '../../constants/env';
 import { CreateURL, TextToHtml } from '../../util';
 
 import SkeletonLoading from '../../assets/skeleton-loading.vue';
+import BackButton from '../../components/ui/BackButton.vue';
 
 const route = useRoute();
 const id = ref(route.params.id);
@@ -28,9 +29,7 @@ onMounted(async () => {
   <main class="post-page">
     <section class="container mx-auto p-4">
       <!-- back button -->
-      <button @click="$router.back()" class="flex items-center text-lg text-green-500 hover:text-green-600 duration-300 mb-4">
-        <span class="material-icons text-lg">keyboard_double_arrow_left</span>Back
-      </button>
+      <BackButton class="mb-8" />
 
       <article v-if="post">
         <!-- img -->

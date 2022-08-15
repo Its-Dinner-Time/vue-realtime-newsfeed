@@ -2,7 +2,7 @@
 import { onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 
-import { CreateURL } from '../../util';
+import AuthorCard from '../../components/AuthorCard.vue';
 
 const store = useStore();
 const authors = computed(() => store.getters.authors);
@@ -14,14 +14,8 @@ onMounted(() => {
 
 <template>
   <main class="flex justify-center">
-    <section class="container my-8 grid grid-cols-4 grid-flow-col gap-4">
-      <figure v-for="(author, i) in authors" :key="i">
-        <img :src="CreateURL(author.avatar, 480, 320)" />
-
-        <figcaption>
-          <span>{{ author.full_name }}</span>
-        </figcaption>
-      </figure>
+    <section class="container mx-auto p-4 grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
+      <AuthorCard v-for="(author, i) in authors" :key="i" :author="author" />
     </section>
   </main>
 </template>
