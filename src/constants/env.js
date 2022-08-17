@@ -1,6 +1,8 @@
 export const pages = {
   postPage: (id = null) => `${import.meta.env.VITE_POST_PAGE}${id ? `/${id}` : ''}`,
   authorPage: (id = null) => `${import.meta.env.VITE_AUTHOR_PAGE}${id ? `/${id}` : ''}`,
+  loginPage: (check) => `/login${check ? `/${check}` : ''}`,
+  signUpPage: (check) => `/signup${check ? `/${check}` : ''}`,
 };
 
 export const queries = {

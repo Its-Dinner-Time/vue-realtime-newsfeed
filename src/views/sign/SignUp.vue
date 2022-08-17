@@ -1,9 +1,13 @@
 <template>
-  <h1 class="uppercase">404 not found</h1>
+  <div></div>
 </template>
 
 <script>
-export default {};
+export default {
+  setup() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

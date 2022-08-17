@@ -1,5 +1,6 @@
 <script setup>
 import { useStore } from 'vuex';
+import { pages } from '../constants/env';
 
 const store = useStore();
 const isMenuActive = () => store.state.menu_is_active;
@@ -7,12 +8,25 @@ const ToggleMenu = () => store.dispatch('ToggleMenu');
 </script>
 
 <template>
-  <header class="flex w-full items-center justify-center sticky top-0 left-0 p-4 bg-gray-600">
-    <h1 class="text-center text-3xl uppercase font-light">dinner times</h1>
-  </header>
   <div class="menu-toggle" :class="{ 'is-active': isMenuActive() }" @click="ToggleMenu">
     <div class="hamburger"><span></span></div>
   </div>
+  <header class="flex w-full items-center justify-center sticky top-0 left-0 p-4 z-10 bg-gray-600">
+    <h1 class="text-center text-3xl uppercase font-light">dinner times</h1>
+
+    <div class="flex items-center absolute top-0 right-4 h-full sign-wrap">
+      <span class="material-symbols-outlined md:hidden inline-block text-4xl cursor-pointer"> account_circle </span>
+
+      <ul class="md:flex hidden">
+        <li class="">
+          <router-link :to="pages.loginPage()" class="btn font-normal ml-4">로그인</router-link>
+        </li>
+        <li class="">
+          <router-link :to="pages.signUpPage()" class="btn font-normal ml-4">회원가입</router-link>
+        </li>
+      </ul>
+    </div>
+  </header>
 </template>
 
 <style scoped>
@@ -42,5 +56,9 @@ const ToggleMenu = () => store.dispatch('ToggleMenu');
 
 .menu-toggle.is-active .hamburger > span {
   @apply rotate-45 before:rotate-0 before:top-0 after:top-0 after:rotate-90;
+}
+
+.sign-wrap .router-link-active {
+  @apply hidden;
 }
 </style>

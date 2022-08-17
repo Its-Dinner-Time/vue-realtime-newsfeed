@@ -4,9 +4,28 @@ import store from '../store';
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/error/404.vue'),
+  },
+  {
     path: '/',
     name: 'Home',
     component: () => import('../views/home/Home.vue'),
+  },
+  {
+    path: pages.loginPage(),
+    name: 'Login',
+    component: () => import('../views/sign/Login.vue'),
+  },
+  {
+    path: pages.signUpPage(),
+    name: 'SignUp',
+    component: () => import('../views/sign/SignUp.vue'),
   },
   {
     path: pages.authorPage(),
