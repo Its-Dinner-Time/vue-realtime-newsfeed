@@ -1,10 +1,13 @@
 <script setup>
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { pages } from '../constants/env';
 
 const store = useStore();
+
 const isMenuActive = () => store.state.menu_is_active;
 const ToggleMenu = () => store.dispatch('ToggleMenu');
+const accessToken = computed(() => store.state.user.accessToken);
 </script>
 
 <template>
@@ -14,7 +17,7 @@ const ToggleMenu = () => store.dispatch('ToggleMenu');
   <header class="flex w-full items-center justify-center sticky top-0 left-0 p-4 z-10 bg-gray-600">
     <h1 class="text-center text-3xl uppercase font-light">dinner times</h1>
 
-    <div class="flex items-center absolute top-0 right-4 h-full sign-wrap">
+    <div v-if="!accessToken" class="flex items-center absolute top-0 right-4 h-full sign-wrap">
       <span class="material-symbols-outlined md:hidden inline-block text-4xl cursor-pointer"> account_circle </span>
 
       <ul class="md:flex hidden">
@@ -25,6 +28,10 @@ const ToggleMenu = () => store.dispatch('ToggleMenu');
           <router-link :to="pages.signUpPage()" class="btn font-normal ml-4">회원가입</router-link>
         </li>
       </ul>
+    </div>
+
+    <div v-else class="flex items-center absolute top-0 right-4 h-full sign-wrap">
+      <span class="material-symbols-outlined text-4xl cursor-pointer"> account_circle </span>
     </div>
   </header>
 </template>

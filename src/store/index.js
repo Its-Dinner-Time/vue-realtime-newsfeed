@@ -10,6 +10,7 @@ export default createStore({
     authors: [],
     total_posts: 0,
     max_posts: 2,
+    user: {},
   },
   getters: {
     posts: (state) => state.posts.sort((a, b) => new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()),
@@ -28,6 +29,9 @@ export default createStore({
     },
     SET_TOTAL_POSTS: (state, count) => {
       state.total_posts = count;
+    },
+    SET_USER: (state, user) => {
+      state.user = user;
     },
   },
   // actions => 비동기 처리
@@ -74,6 +78,12 @@ export default createStore({
     GetAuthors({ commit }) {
       const query = `${queries.getAuthor()} | ${queries.order('_createdAt', 'desc')}`;
       sanity.fetch(query).then((authors) => commit('SET_AUTHORS', authors));
+    },
+
+    LoginToken({ commit }, user) {
+      // token 발행
+      const accessToken = 'example_token';
+      commit('SET_USER', { ...user, accessToken });
     },
   },
 });
